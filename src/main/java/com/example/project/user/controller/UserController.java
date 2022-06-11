@@ -32,13 +32,12 @@ public class UserController {
     }
 
 
-
+    // todo 회원 정보 수정하기
     @PutMapping("/{accountId}")
     public void update(@PathVariable("accountId") String accountId,
                        @RequestBody PutRequest putRequest) {
         userService.update(accountId, putRequest);
     }
-
 
 
     @DeleteMapping("/{accountId}")
