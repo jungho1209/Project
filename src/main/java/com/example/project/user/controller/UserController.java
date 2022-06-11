@@ -39,7 +39,7 @@ public class UserController {
         userService.update(accountId, putRequest);
     }
 
-
+    // todo 회원 삭제하기
     @DeleteMapping("/{accountId}")
     public void delete(@PathVariable("accountId") String accountId) {
         userService.delete(accountId);
