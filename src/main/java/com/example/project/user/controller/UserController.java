@@ -39,6 +39,7 @@ public class UserController {
         userService.update(accountId, putRequest);
     }
 
+
     // todo 회원 삭제하기
     @DeleteMapping("/{accountId}")
     public void delete(@PathVariable("accountId") String accountId) {
@@ -46,6 +47,7 @@ public class UserController {
     }
 
 
+    // todo Id 로 회원 조회하기
     @GetMapping("/{account-id}")
     public UserSearchResponse searchUser(@PathVariable("account-id") String accountId) {
         return userService.searchUser(accountId);
