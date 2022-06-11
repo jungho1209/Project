@@ -1,12 +1,12 @@
 package com.example.project.user.controller;
 
+import com.example.project.user.dto.request.PutRequest;
 import com.example.project.user.dto.request.UserRequest;
+import com.example.project.user.dto.response.UserListResponse;
+import com.example.project.user.dto.response.UserSearchResponse;
 import com.example.project.user.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -17,8 +17,39 @@ public class UserController {
 
     private final UserService userService;
 
+
+    // todo 회원 가입
     @PostMapping("/signup")
-    public void signUp(@RequestBody @Valid UserRequest userRequest){
+    public void signUp(@RequestBody @Valid UserRequest userRequest) {
         userService.signUp(userRequest);
     }
+
+
+    // todo 회원 리스트 가져오기
+    @GetMapping("/search")
+    public UserListResponse searchAllDesc() {
+        return userService.searchAllDesc();
+    }
+
+
+
+    @PutMapping("/{accountId}")
+    public void update(@PathVariable("accountId") String accountId,
+                       @RequestBody PutRequest putRequest) {
+        userService.update(accountId, putRequest);
+    }
+
+
+
+    @DeleteMapping("/{accountId}")
+    public void delete(@PathVariable("accountId") String accountId) {
+        userService.delete(accountId);
+    }
+
+
+    @GetMapping("/{account-id}")
+    public UserSearchResponse searchUser(@PathVariable("account-id") String accountId) {
+        return userService.searchUser(accountId);
+    }
+
 }
