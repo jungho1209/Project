@@ -48,8 +48,8 @@ public class UserController {
 
 
     // todo Id 로 회원 조회하기
-    @GetMapping("/{account-id}")
-    public UserSearchResponse searchUser(@PathVariable("account-id") String accountId) {
+    @GetMapping("/{accountId}")
+    public UserSearchResponse searchUser(@PathVariable("accountId") String accountId) {
         return userService.searchUser(accountId);
     }
 
