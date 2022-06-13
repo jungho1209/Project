@@ -8,7 +8,7 @@ import com.example.project.user.dto.response.UserListResponse;
 import com.example.project.user.dto.response.UserListResponse.UserResponse;
 import com.example.project.user.dto.response.UserSearchResponse;
 import com.example.project.user.exception.AlreadyExistUserException;
-import com.example.project.user.exception.NotExistAccountException;
+import com.example.project.user.exception.NotExistAccountIdException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -65,7 +65,7 @@ public class UserService {
     public void update(String accountId, PutRequest putRequest) {
 
         User user = userRepository.findByAccountId(accountId)
-                .orElseThrow(() -> NotExistAccountException.EXCEPTION);
+                .orElseThrow(() -> NotExistAccountIdException.EXCEPTION);
 
         user.update(passwordEncoder.encode(putRequest.getPassword()),
                 putRequest.getName(),
@@ -79,7 +79,7 @@ public class UserService {
     public void delete(String accountId) {
 
         User user = userRepository.findByAccountId(accountId)
-                .orElseThrow(() -> NotExistAccountException.EXCEPTION);
+                .orElseThrow(() -> NotExistAccountIdException.EXCEPTION);
 
         userRepository.delete(user);
     }
@@ -90,7 +90,7 @@ public class UserService {
     public UserSearchResponse searchUser(String accountId) {
 
         User user = userRepository.findByAccountId(accountId)
-                .orElseThrow(() -> NotExistAccountException.EXCEPTION);
+                .orElseThrow(() -> NotExistAccountIdException.EXCEPTION);
 
         return UserSearchResponse.builder()
                 .accountId(user.getAccountId())
@@ -98,4 +98,7 @@ public class UserService {
                 .StudentId(user.getStudentId())
                 .build();
     }
+
+
+    // todo
 }
