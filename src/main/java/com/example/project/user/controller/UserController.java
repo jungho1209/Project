@@ -1,11 +1,12 @@
 package com.example.project.user.controller;
 
-import com.example.project.user.dto.request.PutRequest;
-import com.example.project.user.dto.request.UserRequest;
-import com.example.project.user.dto.response.UserListResponse;
-import com.example.project.user.dto.response.UserSearchResponse;
+import com.example.project.user.domain.dto.request.PutRequest;
+import com.example.project.user.domain.dto.request.UserRequest;
+import com.example.project.user.domain.dto.response.UserListResponse;
+import com.example.project.user.domain.dto.response.UserSearchResponse;
 import com.example.project.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,6 +21,7 @@ public class UserController {
 
     // todo 회원 가입
     @PostMapping("/signup")
+    @ResponseStatus(HttpStatus.CREATED)
     public void signUp(@RequestBody @Valid UserRequest userRequest) {
         userService.signUp(userRequest);
     }
@@ -34,6 +36,7 @@ public class UserController {
 
     // todo 회원 정보 수정하기
     @PutMapping("/{account-id}")
+    @ResponseStatus(HttpStatus.CREATED)
     public void update(@PathVariable("account-id") String accountId,
                        @RequestBody PutRequest putRequest) {
         userService.update(accountId, putRequest);
