@@ -16,18 +16,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().and()
                 .csrf().disable()
                 .formLogin().disable()
+                .cors()
 
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
                 .and()
                 .authorizeRequests()
 
-                .antMatchers("/**").permitAll()
-
-                .anyRequest().authenticated();
+                .anyRequest().permitAll();
     }
 
     @Bean
