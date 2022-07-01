@@ -1,4 +1,4 @@
-package com.example.project.user.domain;
+package com.example.project.domain.auth.domain;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -16,7 +17,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 255, nullable = false)
+    @Column(length = 255, nullable = false, unique = true)
     private String accountId;
 
     @Column(length = 60, nullable = false)
@@ -25,8 +26,9 @@ public class User {
     @Column(length = 20, nullable = false)
     private String name;
 
-    @Column(length = 6, nullable = false)
+    @Column(length = 5, nullable = false)
     private Long studentId;
+
 
     @Builder
     public User(String accountId, String password, String name, Long studentId) {
@@ -36,8 +38,8 @@ public class User {
         this.studentId = studentId;
     }
 
-    public void update(String accountId, String password, String name, Long studentId) {
-        this.accountId = accountId;
+
+    public void update(String password, String name, Long studentId) {
         this.password = password;
         this.name = name;
         this.studentId = studentId;

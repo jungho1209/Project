@@ -21,7 +21,7 @@ public class ExceptionFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                    FilterChain filterChain) throws IOException {
+                                    FilterChain filterChain) throws IOException { // todo OncePerRequestFilter 에 있는 거 재정의
         try { // todo 아래 에러가 발생하면 잡음
             filterChain.doFilter(request, response);
         } catch (CustomException e) {
@@ -36,10 +36,10 @@ public class ExceptionFilter extends OncePerRequestFilter {
                 .status(errorCode.getStatus())
                 .message(errorCode.getMessage())
                 .build();
-        String errorResponseJson = objectMapper.writeValueAsString(customErrorResponse);
+        String errorResponseJson = objectMapper.writeValueAsString(customErrorResponse); // todo Json 값으로 변환을 해줌
 
-        response.setStatus(errorCode.getStatus());
-        response.setContentType("application/json");
-        response.getWriter().write(errorResponseJson);
+        response.setStatus(errorCode.getStatus()); // todo 응답에 상태코드 지정
+        response.setContentType("application/json"); // todo Json 타입으로 지정
+        response.getWriter().write(errorResponseJson); // todo 에러 Json 메세지 받게함
     }
 }

@@ -1,10 +1,11 @@
-package com.example.project.user.controller;
+package com.example.project.domain.auth.controller;
 
-import com.example.project.user.domain.dto.request.PutRequest;
-import com.example.project.user.domain.dto.request.UserRequest;
-import com.example.project.user.domain.dto.response.UserListResponse;
-import com.example.project.user.domain.dto.response.UserSearchResponse;
-import com.example.project.user.service.UserService;
+import com.example.project.domain.auth.domain.dto.request.LoginRequest;
+import com.example.project.domain.auth.domain.dto.request.PutRequest;
+import com.example.project.domain.auth.domain.dto.request.UserRequest;
+import com.example.project.domain.auth.domain.dto.response.UserListResponse;
+import com.example.project.domain.auth.domain.dto.response.UserSearchResponse;
+import com.example.project.domain.auth.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping("/user")
 @RestController
-public class UserController {
+public class AuthController {
 
     private final UserService userService;
 
@@ -55,5 +56,14 @@ public class UserController {
     public UserSearchResponse searchUser(@PathVariable("account-id") String accountId) {
         return userService.searchUser(accountId);
     }
+
+
+    // todo 로그인 기능
+    @PostMapping("/login")
+    public void logIn(@RequestBody LoginRequest loginRequest){
+        userService.logIn(loginRequest);
+    }
+
+
 
 }

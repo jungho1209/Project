@@ -1,14 +1,17 @@
-package com.example.project.user.service;
+package com.example.project.domain.user.service;
 
-import com.example.project.user.domain.User;
-import com.example.project.user.domain.repository.UserRepository;
-import com.example.project.user.dto.request.PutRequest;
-import com.example.project.user.dto.request.UserRequest;
-import com.example.project.user.dto.response.UserListResponse;
-import com.example.project.user.dto.response.UserListResponse.UserResponse;
-import com.example.project.user.dto.response.UserSearchResponse;
-import com.example.project.user.exception.AlreadyExistUserException;
-import com.example.project.user.exception.NotExistAccountIdException;
+import com.example.project.domain.user.domain.User;
+import com.example.project.domain.user.domain.dto.request.LoginRequest;
+import com.example.project.domain.user.domain.dto.request.PutRequest;
+import com.example.project.domain.user.domain.dto.request.UserRequest;
+import com.example.project.domain.user.domain.dto.response.UserListResponse;
+import com.example.project.domain.user.domain.dto.response.UserListResponse.UserResponse;
+import com.example.project.domain.user.domain.dto.response.UserSearchResponse;
+import com.example.project.domain.user.domain.repository.UserRepository;
+import com.example.project.global.exception.AlreadyExistUserException;
+import com.example.project.global.exception.IdNotFoundException;
+import com.example.project.global.exception.NotExistAccountIdException;
+import com.example.project.global.exception.PasswordMissMatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -100,5 +103,15 @@ public class UserService {
     }
 
 
-    // todo
+    // todo 로그인 기능
+    @Transactional
+    public void logIn(LoginRequest loginRequest) {
+        User user = userRepository.findByAccountId(loginRequest.getAccountId())
+                .orElseThrow(() -> IdNotFoundException.EXCEPTION);
+
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword()))
+            throw PasswordMissMatchException.EXCEPTION;
+    }
+
+
 }

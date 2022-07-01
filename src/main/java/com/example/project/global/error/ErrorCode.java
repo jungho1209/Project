@@ -11,6 +11,7 @@ import lombok.Getter;
 
 public enum ErrorCode {
 
+    SIGNATURE_JWT(401, "Signature Jwt"),
     EXPIRED_JWT(401, "Expired Jwt"),
     INVALID_JWT(401, "Invalid Jwt"),
     PASSWORD_MIS_MATCH(401, "Password Mis Match"),
@@ -22,7 +23,7 @@ public enum ErrorCode {
 
     INTERNAL_SERVER_ERROR(500, "Internal Server Error"),
 
-    ID_NOT_FOUND(404,"AccountId Mis Match"),
+    ID_NOT_FOUND(404, "AccountId Mis Match"),
     NOT_EXIST_ACCOUNT(409, "Account Not Exist");
 
     private final int status;

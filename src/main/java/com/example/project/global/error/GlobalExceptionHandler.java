@@ -31,7 +31,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> bindExceptionHanding(BindException e) {
         Map<String, String> errorsList = new HashMap<>(); // todo error 담는 리스트 key - value 형태로 저장되는 배열 : Map
         for (FieldError error : e.getFieldErrors()) { // todo error 의 길이만큼 반복하여 메세지를 추가한다
-            errorsList.put(error.getField(), error.getDefaultMessage());
+            errorsList.put(error.getField(),
+                           error.getDefaultMessage());
         }
 
         return new ResponseEntity<>(errorsList, HttpStatus.BAD_REQUEST);
