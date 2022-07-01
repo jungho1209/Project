@@ -1,10 +1,10 @@
-package com.example.project.user.dto.response;
+package com.example.project.domain.user.domain.dto.response;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
+@Builder
 public class PutResponse {
 
 

@@ -1,4 +1,4 @@
-package com.example.project.user.dto.request;
+package com.example.project.domain.user.domain.dto.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +19,7 @@ public class UserRequest {
 
     @NotBlank
     private String name;
+
 
     private Long studentId;
 }
