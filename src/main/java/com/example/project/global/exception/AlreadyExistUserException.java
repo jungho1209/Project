@@ -1,8 +1,8 @@
-package com.example.project.user.exception;
+package com.example.project.global.exception;
 
 
-import com.example.project.user.error.CustomException;
-import com.example.project.user.error.ErrorCode;
+import com.example.project.global.error.CustomException;
+import com.example.project.global.error.ErrorCode;
 
 public class AlreadyExistUserException extends CustomException {
 

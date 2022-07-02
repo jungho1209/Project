@@ -3,13 +3,12 @@ package com.example.project.global.exception;
 import com.example.project.global.error.CustomException;
 import com.example.project.global.error.ErrorCode;
 
-public class PasswordMissMatchException extends CustomException {
+public class ExpiredJwtException extends CustomException {
 
     public static final CustomException EXCEPTION =
-            new PasswordMissMatchException();
+            new ExpiredJwtException();
 
-    private PasswordMissMatchException() {
-        super(ErrorCode.PASSWORD_MIS_MATCH);
+    private ExpiredJwtException(){
+        super(ErrorCode.SIGNATURE_JWT);
     }
 }
-

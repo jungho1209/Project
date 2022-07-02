@@ -3,13 +3,12 @@ package com.example.project.global.exception;
 import com.example.project.global.error.CustomException;
 import com.example.project.global.error.ErrorCode;
 
-public class PasswordMissMatchException extends CustomException {
+public class AuthNotFoundException extends CustomException {
 
     public static final CustomException EXCEPTION =
-            new PasswordMissMatchException();
+            new AuthNotFoundException();
 
-    private PasswordMissMatchException() {
-        super(ErrorCode.PASSWORD_MIS_MATCH);
+    private AuthNotFoundException(){
+        super(ErrorCode.AUTH_NOT_FOUND);
     }
 }
-
