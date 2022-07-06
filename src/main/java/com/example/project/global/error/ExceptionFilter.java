@@ -1,8 +1,9 @@
-package com.example.project.user.error;
+package com.example.project.global.error;
 
-import com.example.project.user.error.ErrorResponse.CustomErrorResponse;
+import com.example.project.global.error.ErrorResponse.CustomErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -10,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
+@Component
 @RequiredArgsConstructor
 public class ExceptionFilter extends OncePerRequestFilter {
 
@@ -27,6 +28,7 @@ public class ExceptionFilter extends OncePerRequestFilter {
         } catch (CustomException e) {
             sendErrorMessage(response, e.getErrorcode());
         } catch (Exception e) {
+            logger.error(e);
             sendErrorMessage(response, ErrorCode.INTERNAL_SERVER_ERROR);
         }
     }
