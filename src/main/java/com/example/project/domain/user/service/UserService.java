@@ -4,14 +4,16 @@ import com.example.project.domain.user.domain.User;
 import com.example.project.domain.user.domain.dto.request.LoginRequest;
 import com.example.project.domain.user.domain.dto.request.PutRequest;
 import com.example.project.domain.user.domain.dto.request.UserRequest;
+import com.example.project.domain.user.domain.dto.response.TokenResponse;
 import com.example.project.domain.user.domain.dto.response.UserListResponse;
 import com.example.project.domain.user.domain.dto.response.UserListResponse.UserResponse;
 import com.example.project.domain.user.domain.dto.response.UserSearchResponse;
 import com.example.project.domain.user.domain.repository.UserRepository;
 import com.example.project.global.exception.AlreadyExistUserException;
-import com.example.project.global.exception.IdNotFoundException;
+import com.example.project.global.exception.AuthNotFoundException;
 import com.example.project.global.exception.NotExistAccountIdException;
 import com.example.project.global.exception.PasswordMissMatchException;
+import com.example.project.global.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,17 +22,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @RequiredArgsConstructor
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider jwtTokenProvider;
 
 
     // todo 회원가입 기능
-    @Transactional
     public void signUp(UserRequest userRequest) {
         if (userRepository.findByAccountId(userRequest.getAccountId()).isPresent()) {
             throw AlreadyExistUserException.EXCEPTION;
@@ -65,7 +66,7 @@ public class UserService {
 
     // todo 회원 정보 수정하기
     @Transactional
-    public void update(String accountId, PutRequest putRequest) {
+    public void userUpdate(String accountId, PutRequest putRequest) {
 
         User user = userRepository.findByAccountId(accountId)
                 .orElseThrow(() -> NotExistAccountIdException.EXCEPTION);
@@ -103,14 +104,23 @@ public class UserService {
     }
 
 
-    // todo 로그인 기능
+    // todo 로그인 검증해서 accessToken , refreshToken 발급
     @Transactional
-    public void logIn(LoginRequest loginRequest) {
-        User user = userRepository.findByAccountId(loginRequest.getAccountId())
-                .orElseThrow(() -> IdNotFoundException.EXCEPTION);
+    public TokenResponse signIn(LoginRequest loginRequest) {
 
-        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword()))
+        User user = userRepository.findByAccountId(loginRequest.getAccountId())
+                .orElseThrow(() -> AuthNotFoundException.EXCEPTION);
+
+        if (!passwordEncoder.matches(loginRequest.getPassword(), user.getPassword())) {
             throw PasswordMissMatchException.EXCEPTION;
+        }
+
+        TokenResponse tokenResponse = jwtTokenProvider.generateTokens(loginRequest.getAccountId());
+
+        return TokenResponse.builder()
+                .accessToken(tokenResponse.getAccessToken())
+                .refreshToken(tokenResponse.getRefreshToken())
+                .build();
     }
 
 
