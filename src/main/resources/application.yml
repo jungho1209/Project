@@ -17,10 +17,13 @@ spring:
 
 jwt:
   secret: ${Secret_Key}
-  access_exp: ${access}
-  refresh_exp: 
+  access_exp: ${access_exp}
+  refresh_exp: ${refresh_exp}
 
 
 redis:
   host: ${REDIS_HOST}
   port: ${REDIS_PORT}
+
+server:
+  port: 8081
