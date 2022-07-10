@@ -22,8 +22,8 @@ public class UserController {
 
 
     // todo 회원 가입
-    @PostMapping("/signup")
     @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/signup")
     public void signUp(@RequestBody @Valid UserRequest userRequest) {
         userService.signUp(userRequest);
     }
@@ -36,7 +36,6 @@ public class UserController {
 
     // todo 회원 정보 수정하기
     @PutMapping("/{account-id}")
-    @ResponseStatus(HttpStatus.CREATED)
     public void update(@PathVariable("account-id") String accountId,
                        @RequestBody PutRequest putRequest) {
         userService.userUpdate(accountId, putRequest);
@@ -49,7 +48,7 @@ public class UserController {
     }
 
     // todo Id 로 회원 조회하기
-    @GetMapping("/{account-id}")
+    @GetMapping("/search/{account-id}")
     public UserSearchResponse searchUser(@PathVariable("account-id") String accountId) {
         return userService.searchUser(accountId);
     }
