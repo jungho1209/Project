@@ -1,4 +1,4 @@
-package com.example.project.user.error;
+package com.example.project.global.error;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
